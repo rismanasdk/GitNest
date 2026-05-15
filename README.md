@@ -14,7 +14,7 @@
 ![GitHub contributors](https://img.shields.io/github/contributors/Ankita15k/GitNest)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Ankita15k/GitNest)
 
-## <img width="150" height="150" alt="Logo" src="https://github.com/user-attachments/assets/b4cf9a44-aa69-4256-bae9-7f67b5246278" />
+## <img width="120" height="110" alt="Logo" src="https://github.com/user-attachments/assets/b4cf9a44-aa69-4256-bae9-7f67b5246278" />
 
 #  GitNest - Lightweight Collaborative Code Hosting Platform
 
@@ -167,11 +167,24 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for full details on the workflow, codin
 
 ---
 
-## 👩🏻‍💻 Project Admin
+## 🌟 Project Admin
 
-| Name | GitHub |
-|---|---|
-| Ankita Kumari | [@Ankita15k](https://github.com/Ankita15k) |
+<table>
+<tr>
+<td align="center">
+<a href="https://github.com/Ankita15k"><img src="https://github.com/Ankita15k.png" height="140px" width="140px" alt="Ankita Kumari"></a><br><sub><b>Project Admin - Ankita kumari</b></sub>
+</tr>
+</table>
+
+
+## 🙌 Project Contributors
+
+A huge thank you to everyone who has contributed to GitNest!
+
+ 
+<a href="https://github.com/Ankita15k/GitNest/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Ankita15k/GitNest&cache_burst=1" />
+</a>
 
 ---
 
