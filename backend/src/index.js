@@ -11,6 +11,12 @@ import errorHandler from './middleware/errorHandler.js';
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+if (!process.env.JWT_SECRET) {
+  console.error('FATAL ERROR: JWT_SECRET is not defined in environment variables.');
+  process.exit(1);
+}
+
+
 connectDB();
 
 app.use(cors());
