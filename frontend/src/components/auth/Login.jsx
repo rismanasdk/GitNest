@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuthStore } from '../../store/authStore';
+import { useToastStore } from '../../store/useToastStore';
 import { useNavigate, Link } from 'react-router-dom';
 
 const Login = () => {
@@ -7,13 +8,12 @@ const Login = () => {
     email: '',
     password: '',
   });
-  const [validationErrors, setValidationErrors] = useState({
-    email: '',
-    password: '',
-  });
+  const [validationErrors, setValidationErrors] = useState({});
 
   const { login, loading, error, clearError } = useAuthStore();
+  const addToast = useToastStore((s) => s.addToast);
   const navigate = useNavigate();
+
   useEffect(() => {
     clearError();
   }, [clearError]);
@@ -21,7 +21,8 @@ const Login = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    if (value.trim()) {
+    // Clear field-specific error when user starts typing
+    if (validationErrors[name] || value.trim()) {
       setValidationErrors((prev) => ({ ...prev, [name]: '' }));
     }
   };
@@ -46,13 +47,22 @@ const Login = () => {
       return;
     }
 
-    setValidationErrors({ email: '', password: '' });
+    setValidationErrors({});
 
     try {
       await login(emailTrimmed, passwordTrimmed);
+      addToast({ message: 'Signed in successfully!', type: 'success' });
       navigate('/');
     } catch (err) {
-      console.error(err);
+      // Error is already handled and displayed via auth store
+      // Parse field-level errors if available
+      if (err.response?.data?.errors && Array.isArray(err.response.data.errors)) {
+        const fieldErrors = {};
+        err.response.data.errors.forEach((error) => {
+          fieldErrors[error.field] = error.message;
+        });
+        setValidationErrors(fieldErrors);
+      }
     }
   };
 
@@ -65,14 +75,18 @@ const Login = () => {
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && <div className="text-red-500 text-sm text-center">{error}</div>}
-          <div className="rounded-md shadow-sm space-y-3">
+          {error && <div className="text-red-500 text-sm text-center p-2 bg-red-50 dark:bg-red-900/30 rounded">{error}</div>}
+          <div className="rounded-md shadow-sm -space-y-px">
             <div>
               <input
                 name="email"
                 type="email"
                 required
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 text-gray-900 dark:text-white dark:bg-gray-800 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors"
+                className={`appearance-none rounded-none relative block w-full px-3 py-2 border placeholder-gray-500 text-gray-900 dark:text-white dark:bg-gray-800 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors ${
+                  validationErrors.email
+                    ? 'border-red-500 dark:border-red-500'
+                    : 'border-gray-300 dark:border-gray-700'
+                }`}
                 placeholder="Email address"
                 value={formData.email}
                 onChange={handleChange}
@@ -86,7 +100,11 @@ const Login = () => {
                 name="password"
                 type="password"
                 required
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 dark:border-gray-700 placeholder-gray-500 text-gray-900 dark:text-white dark:bg-gray-800 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors"
+                className={`appearance-none rounded-none relative block w-full px-3 py-2 border placeholder-gray-500 text-gray-900 dark:text-white dark:bg-gray-800 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm transition-colors ${
+                  validationErrors.password
+                    ? 'border-red-500 dark:border-red-500'
+                    : 'border-gray-300 dark:border-gray-700'
+                }`}
                 placeholder="Password"
                 value={formData.password}
                 onChange={handleChange}
