@@ -57,8 +57,7 @@ const FullScreenLoader = ({ message = "Loading..." }) => {
           <span className="w-2 h-4 bg-emerald-400 animate-pulse rounded-sm" />
         </div>
       </div>
-    </div>
-
+      {/* Keyframe animations */}
       <style>{`
         @keyframes spin {
           from { transform: rotate(0deg); }
@@ -69,6 +68,7 @@ const FullScreenLoader = ({ message = "Loading..." }) => {
           50% { opacity: 0; }
         }
       `}</style>
+    </div>
   );
 };
 
