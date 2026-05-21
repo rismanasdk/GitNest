@@ -21,28 +21,6 @@ export default function GitNestHomepage() {
     const [activeLink, setActiveLink] = useState("#features");
     const { isDarkMode, toggleTheme } = useThemeStore();
 
-    const features = [
-        {
-            title: "Version Control",
-            desc: "Create repositories, branches, pull requests, and commits with a modern collaborative workflow.",
-            icon: <GitBranch className="w-6 h-6 text-[#00dc82]" />,
-        },
-        {
-            title: "AI Workflows",
-            desc: "AI-assisted reviews, contributor onboarding, and intelligent development flows.",
-            icon: <Sparkles className="w-6 h-6 text-[#00dc82]" />,
-        },
-        {
-            title: "Team Collaboration",
-            desc: "Built for maintainers, contributors, and modern open-source teams.",
-            icon: <Users className="w-6 h-6 text-[#00dc82]" />,
-        },
-        {
-            title: "Developer First",
-            desc: "Clean APIs, scalable systems, and contributor-friendly architecture.",
-            icon: <ShieldCheck className="w-6 h-6 text-[#00dc82]" />,
-        },
-    ];
 
     const marqueeItems = [
         "MERN Stack",
